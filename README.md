@@ -1,73 +1,67 @@
-# React + TypeScript + Vite
+# VIN Decoder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A single-page application for decoding Vehicle Identification Numbers (VINs) using the public [NHTSA API](https://vpic.nhtsa.dot.gov/api/). Enter any 17-character VIN to get a breakdown of the vehicle's manufacturer, model year, plant, and other specifications. The app also provides a browsable reference of all available vehicle variables.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- VIN decoding with inline validation (length, character set)
+- Results table showing only populated variables
+- Last 3 decoded VINs saved in localStorage — click to re-run
+- Full list of NHTSA vehicle variables with descriptions
+- Variable detail view
+- Dark mode support
+- Responsive layout (420px – 1440px)
 
-## React Compiler
+## Tech stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [React 19](https://react.dev/)
+- [React Router v6](https://reactrouter.com/)
+- [TanStack Query v5](https://tanstack.com/query)
+- [NHTSA Vehicle API](https://vpic.nhtsa.dot.gov/api/)
+- TypeScript + Vite
 
-## Expanding the ESLint configuration
+## Local setup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Requirements:** Node.js 18+
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# 1. Clone the repository
+git clone <repo-url>
+cd vin-decoder
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# 2. Install dependencies
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 3. Start the dev server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app will be available at `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Other commands
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build    # production build (type-checks first)
+npm run preview  # preview the production build locally
+npm run lint     # run ESLint
+```
+
+## Project structure
+
+```
+src/
+├── api/
+│   └── nhtsa.ts          # NHTSA fetch functions and types
+├── components/
+│   ├── Layout.tsx         # Nav bar and page wrapper
+│   └── VinForm.tsx        # VIN input with validation
+├── hooks/
+│   └── useVinHistory.ts   # localStorage hook for recent VINs
+├── pages/
+│   ├── Home.tsx           # / — decode form and results
+│   ├── Variables.tsx      # /variables — variable list
+│   └── VariableDetail.tsx # /variables/:id — variable detail
+├── App.tsx                # Route definitions
+├── main.tsx               # App entry point
+└── index.css              # Global styles
 ```
