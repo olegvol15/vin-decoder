@@ -40,7 +40,7 @@ export function VariableDetail() {
           {variable.Description && (
             <tr>
               <th>Description</th>
-              <td>{variable.Description}</td>
+              <td dangerouslySetInnerHTML={{ __html: variable.Description }} />
             </tr>
           )}
         </tbody>

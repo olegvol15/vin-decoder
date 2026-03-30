@@ -20,7 +20,7 @@ export function Variables() {
             <Link to={`/variables/${v.ID}`}>
               <span className="variable-name">{v.Name}</span>
               {v.Description && (
-                <span className="variable-desc">{v.Description}</span>
+                <span className="variable-desc" dangerouslySetInnerHTML={{ __html: v.Description }} />
               )}
             </Link>
           </li>
