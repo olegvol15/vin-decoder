@@ -20,6 +20,8 @@ A single-page application for decoding Vehicle Identification Numbers (VINs) usi
 - [NHTSA Vehicle API](https://vpic.nhtsa.dot.gov/api/)
 - TypeScript + Vite
 
+LIVE DEMO IS HERE - https://vin-decoder-gamma-taupe.vercel.app/
+
 ## Local setup
 
 **Requirements:** Node.js 18+
