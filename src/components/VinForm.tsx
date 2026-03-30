@@ -3,6 +3,8 @@ import { useState } from 'react'
 const VIN_PATTERN = /^[A-HJ-NPR-Z0-9]{17}$/i
 
 interface Props {
+  value: string
+  onChange: (vin: string) => void
   onSubmit: (vin: string) => void
   loading: boolean
 }
@@ -14,23 +16,22 @@ function validate(vin: string): string | null {
   return null
 }
 
-export function VinForm({ onSubmit, loading }: Props) {
-  const [vin, setVin] = useState('')
+export function VinForm({ value, onChange, onSubmit, loading }: Props) {
   const [error, setError] = useState<string | null>(null)
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    const err = validate(vin)
+    const err = validate(value)
     if (err) {
       setError(err)
       return
     }
     setError(null)
-    onSubmit(vin)
+    onSubmit(value)
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setVin(e.target.value.toUpperCase())
+    onChange(e.target.value.toUpperCase())
     if (error) setError(null)
   }
 
@@ -39,7 +40,7 @@ export function VinForm({ onSubmit, loading }: Props) {
       <div className="form-row">
         <input
           type="text"
-          value={vin}
+          value={value}
           onChange={handleChange}
           placeholder="Enter VIN (e.g. 1HGBH41JXMN109186)"
           maxLength={17}
